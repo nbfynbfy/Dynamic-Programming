@@ -1,0 +1,29 @@
+/*
+有数量为n的面粉，打算包m种粽子，可以在没有馅料的情况下花费a0，得到价值为b0的粽子。
+对于每种粽子，总共有ci的馅料，每花费di馅料，ai面粉，得到价值为bi的粽子
+0<n<=1000,a b c d m <100
+
+这是一个背包问题
+对于有馅的粽子是有界背包问题
+对于无馅的粽子是完全背包问题
+*/
+#include<bits/stdc++.h>
+using namespace std;
+const int N = 1e3+5;
+int dp[N];
+int main(){
+  int n,m,a0,b0;cin>>n>>m>>a0>>b0;
+  for (int i=a0;i<=n;i++){
+    dp[i]=max(dp[i],dp[i-a0]+b0);
+  }
+  for (int i=0;i<m;i++){
+    int a,b,c,d;cin>>a>>b>>c>>d;
+    for (int j=0;j<=(c/d);j++){
+      for (int k=n;k>=a;k--){
+        dp[k]=max(dp[k],dp[k-a]+b);
+      }
+    }
+  }
+  cout<<dp[n]<<endl;
+}
+      
